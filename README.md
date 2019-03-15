@@ -9,4 +9,4 @@ Given a binary tree, find its minimum depth.The minimum depth is the number of n
 ##### 解题思路：  
 思路一：深度优先遍历，递归遍历左右子树，遇到叶子节点时返回 1，返回过程中，比较左右子树，较小深度逐层加1。  
 思路二：广度优先遍历，逐层遍历节点，遇到第一个叶子节点返回其深度；  
-代码：
+代码：https://github.com/ZhenxueXu/leetcode/blob/master/src/solution/MinimumDepthOfBinaryTree.java
