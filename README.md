@@ -3,7 +3,7 @@
 
 #### 第一周
 
-##### 知识点：树  
+#### 1、树  
 ##### 题目：  
 Given a binary tree, find its minimum depth.The minimum depth is the number of nodes along the shortest path from the root node down to the  nearest leaf node.  
 ##### 解题思路：  
@@ -11,7 +11,7 @@ Given a binary tree, find its minimum depth.The minimum depth is the number of n
 思路二：广度优先遍历，逐层遍历节点，遇到第一个叶子节点返回其深度；  
 代码：https://github.com/ZhenxueXu/leetcode/blob/master/src/solution/MinimumDepthOfBinaryTree.java
 
-##### 知识点：栈  
+#### 2、栈  
 ##### 题目：  
 Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 Valid operators are+,-,*,/. Each operand may be an integer or another expression.
