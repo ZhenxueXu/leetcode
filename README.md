@@ -263,7 +263,7 @@ Sort a linked list using insertion sort.
 
 ```
 
-#### 二叉树后序遍历
+#### 1、二叉树后序遍历
 ###### 题目
 Given a binary tree, return the postorder traversal of its nodes' values.  
 For example:
@@ -327,4 +327,154 @@ Note: Recursive solution is trivial, could you do it iteratively?
 		return orderList;
 	}
 
+```
+#### 第四周
+#### 二叉树前序遍历
+###### 题目  
+Given a binary tree, return the preorder traversal of its nodes' values.
+
+For example:
+Given binary tree{1,#,2,3},
+return[1,2,3].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+
+###### 解题思路
+###### 递归方法
+递归方法比较简单，把左右子树当成一个完整二叉树递归遍历即可。  
+
+代码：
+```java
+public ArrayList<Integer> preorderTraversal(TreeNode root) {
+		ArrayList<Integer> list = new ArrayList<>();
+		traversal(list,root);
+		return list;
+	}
+
+	public void traversal(ArrayList<Integer> list, TreeNode root){
+		if (root == null){
+			return;
+		}
+		list.add(root.val);
+		traversal(list,root.left);
+		traversal(list,root.right);
+
+	}
+```
+###### 非递归方法
+1. 根节点不为空，则将节点入栈
+2. 将栈内节点依次出栈，直至栈空
+3. 将栈顶节点出栈后加入List中
+4. 若出栈节点有右节点，将右节点入栈
+5. 若出栈节点有左节点，将左节点入栈
+
+代码：
+```java
+public ArrayList<Integer> preOrderTraversal2(TreeNode root){
+		ArrayList<Integer> list = new ArrayList<>();
+		Stack<TreeNode> stack = new Stack<>();
+		if (root != null){
+			stack.push(root);
+		}
+		while (!stack.empty()){
+			TreeNode p = stack.pop();
+			list.add(p.val);
+			if (p.right != null){
+				stack.push(p.right);
+			}
+			if (p.left != null){
+				stack.push(p.left);
+			}
+		}
+		return list;
+	}
+```
+##### 哈希
+####### 题目
+Given an array of integers, find two numbers such that they add up to a specific target number.  
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+You may assume that each input would have exactly one solution.
+
+Input: numbers={2, 7, 11, 15}, target=9  
+Output: index1=1, index2=2
+###### 解题思路
+1. 遍历数组，将数组值作为key，数据下标作为value，放到hashmap中
+2. 遍历数组时，计算当前值与target的差值，将差值作为key，冲哈希表中取出下标，若哈希表中有值，则返回这组下标
+
+代码：
+```java
+public int[] twoSum(int[] numbers, int target) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int[] res = new int[2];
+		for (int i = 0; i < numbers.length; i++) {
+			int diff =  target - numbers[i];
+			Integer value = map.get(diff);
+			if (value != null && value != i){
+				if (value > i){
+					res[0] = i + 1;
+					res[1] = value + 1;
+				}else {
+					res[0] = value + 1;
+					res[1] = i + 1;
+				}
+				return res;
+			}
+			map.put(numbers[i], i);
+		}
+		return res;
+	}
+```
+
+#### 第五周
+##### 链表
+##### 题目
+Given a singly linked list L: L 0→L 1→…→L n-1→L n,
+reorder it to: L 0→L n →L 1→L n-1→L 2→L n-2→…
+
+You must do this in-place without altering the nodes' values.
+
+For example,
+Given{1,2,3,4}, reorder it to{1,4,2,3}.
+
+##### 解题思路
+1. 首先利用快慢指针找到中间节点
+2. 从中间节点截断链表，并将中间节点之后得链表进行反转操作
+3. 同时遍历前半段链表和后半段链表，将后半段插入前半段
+
+##### 代码
+```java
+public void reorderList(ListNode head) {
+		if (head == null){
+			return;
+		}
+		ListNode fast = head;
+		ListNode slow = head;
+		while (fast.next !=null && fast.next.next != null){
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		if (fast == head){
+			return;
+		}
+		ListNode h = new ListNode(0);
+		h.next = slow.next;
+		slow.next = null;
+		ListNode cur = h.next;
+		ListNode newHead = new ListNode(0);
+		while (cur != null){
+			ListNode temp = cur;
+			cur = cur.next;
+			temp.next = newHead.next;
+			newHead.next = temp;
+		}
+		ListNode preInsert = head;
+		cur = newHead.next;
+		while (cur != null ){
+			ListNode temp = cur;
+			cur = cur.next;
+			temp.next = preInsert.next;
+			preInsert.next = temp;
+			preInsert = preInsert.next.next;
+		}
+	}
 ```
